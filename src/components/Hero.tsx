@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { config } from "@/data/config";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type OrbitItem = {
@@ -109,9 +108,9 @@ function HeroVisual() {
   }: OrbitProps) => {
     return (
       <div
-        className={`orbit-track ${
-          orbitClass
-        } ${reverse ? "orbit-reverse" : ""}`}
+        className={`orbit-track ${orbitClass} ${
+          reverse ? "orbit-reverse" : ""
+        }`}
         style={
           {
             "--orbit-duration": duration,
@@ -145,12 +144,48 @@ function HeroVisual() {
     dot: "dot-blue" | "dot-purple" | "dot-subtle";
     align: "left" | "right" | "center";
   }[] = [
-    { label: "AI", top: "-4%", left: "50%", dot: "dot-blue", align: "center" },
-    { label: "PYTHON", top: "104%", left: "50%", dot: "dot-blue", align: "center" },
-    { label: "COMPUTER VISION", top: "23%", left: "97%", dot: "dot-purple", align: "right" },
-    { label: "ML", top: "77%", left: "3%", dot: "dot-purple", align: "left" },
-    { label: "REACT", top: "77%", left: "97%", dot: "dot-subtle", align: "right" },
-    { label: "FULL STACK", top: "23%", left: "3%", dot: "dot-subtle", align: "left" },
+    {
+      label: "AI",
+      top: "-4%",
+      left: "50%",
+      dot: "dot-blue",
+      align: "center",
+    },
+    {
+      label: "PYTHON",
+      top: "104%",
+      left: "50%",
+      dot: "dot-blue",
+      align: "center",
+    },
+    {
+      label: "COMPUTER VISION",
+      top: "23%",
+      left: "97%",
+      dot: "dot-purple",
+      align: "right",
+    },
+    {
+      label: "ML",
+      top: "77%",
+      left: "3%",
+      dot: "dot-purple",
+      align: "left",
+    },
+    {
+      label: "REACT",
+      top: "77%",
+      left: "97%",
+      dot: "dot-subtle",
+      align: "right",
+    },
+    {
+      label: "FULL STACK",
+      top: "23%",
+      left: "3%",
+      dot: "dot-subtle",
+      align: "left",
+    },
   ];
 
   const isActive = isHovered || isPressed;
@@ -194,20 +229,12 @@ function HeroVisual() {
           mass: 0.7,
         }}
       >
-        {/* =================================================
-            ORBIT 1
-        ================================================= */}
-
         {renderOrbit({
           items: orbitOneItems,
           orbitClass: "orbit-1",
           dotVariant: "dot-blue",
           duration: "28s",
         })}
-
-        {/* =================================================
-            ORBIT 2
-        ================================================= */}
 
         {renderOrbit({
           items: orbitTwoItems,
@@ -217,10 +244,6 @@ function HeroVisual() {
           reverse: true,
         })}
 
-        {/* =================================================
-            ORBIT 3
-        ================================================= */}
-
         {renderOrbit({
           items: orbitThreeItems,
           orbitClass: "orbit-3",
@@ -228,38 +251,34 @@ function HeroVisual() {
           duration: "36s",
         })}
 
-        {/* =================================================
-            CENTER PHOTO
-        ================================================= */}
-
         <div className="hero-photo">
           <div className="hero-photo-glow" />
 
           <div className="hero-photo-frame">
-            <Image
-              src="/public/profile/Image.jpg"
+            <img
+              src="/profile/Image.jpg"
               alt="Lokeshvishal"
               width={220}
               height={220}
-              priority
-              className="h-full w-full object-cover"
+              className="profile-photo"
             />
           </div>
         </div>
-
-        {/* =================================================
-            FIXED SKILL LEGEND
-        ================================================= */}
 
         <div className="orbit-legend" aria-hidden="true">
           {legendItems.map((item) => (
             <div
               key={item.label}
               className={`legend-item legend-${item.align}`}
-              style={{ top: item.top, left: item.left }}
+              style={{
+                top: item.top,
+                left: item.left,
+              }}
             >
               <span className={`orbit-node ${item.dot}`} />
-              <span className="orbit-label">{item.label}</span>
+              <span className="orbit-label">
+                {item.label}
+              </span>
             </div>
           ))}
         </div>
@@ -276,10 +295,6 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden pt-20"
     >
-      {/* =================================================
-          BACKGROUND
-      ================================================= */}
-
       <div className="absolute inset-0 z-0 opacity-20">
         <div
           className="
@@ -314,10 +329,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* =================================================
-          MAIN CONTAINER
-      ================================================= */}
-
       <div
         className="
           container
@@ -338,12 +349,7 @@ export default function Hero() {
           lg:gap-16
         "
       >
-        {/* =================================================
-            LEFT CONTENT
-        ================================================= */}
-
         <div className="flex w-full flex-col">
-          {/* Intro */}
           <motion.div
             initial={{
               opacity: 0,
@@ -414,10 +420,6 @@ export default function Hero() {
             </h2>
           </motion.div>
 
-          {/* =================================================
-              MOBILE ORBIT
-          ================================================= */}
-
           <div
             className="
               order-2
@@ -431,10 +433,6 @@ export default function Hero() {
           >
             <HeroVisual />
           </div>
-
-          {/* =================================================
-              DESCRIPTION + BUTTONS
-          ================================================= */}
 
           <motion.div
             initial={{
@@ -484,7 +482,6 @@ export default function Hero() {
                 md:justify-start
               "
             >
-              {/* Projects */}
               <Link
                 href="#projects"
                 className="
@@ -519,7 +516,6 @@ export default function Hero() {
                 />
               </Link>
 
-              {/* GitHub */}
               <a
                 href={config.githubUrl}
                 target="_blank"
@@ -548,16 +544,11 @@ export default function Hero() {
                   size={18}
                   aria-hidden="true"
                 />
-
                 GitHub
               </a>
             </div>
           </motion.div>
         </div>
-
-        {/* =================================================
-            DESKTOP ORBIT
-        ================================================= */}
 
         <motion.div
           initial={{
