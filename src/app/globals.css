@@ -65,6 +65,7 @@ img {
 
 .orbit-track {
   position: absolute;
+  inset: 0;
   border-radius: 50%;
   pointer-events: none;
   transform-origin: center center;
@@ -76,13 +77,13 @@ img {
 }
 
 .orbit-1 {
-  inset: 24%;
+  inset: 20%;
   border: 1px solid rgba(96, 165, 250, 0.32);
   animation-name: orbit-spin;
 }
 
 .orbit-2 {
-  inset: 12%;
+  inset: 10%;
   border: 1px solid rgba(168, 85, 247, 0.28);
   animation-name: orbit-spin-reverse;
 }
@@ -93,22 +94,53 @@ img {
   animation-name: orbit-spin;
 }
 
+.orbit-angle {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--planet-angle));
+  transform-origin: center center;
+}
+
 .orbit-planet {
   position: absolute;
   left: 50%;
   top: 0;
   width: 0;
   height: 0;
-  transform: rotate(var(--planet-angle));
-  transform-origin: 0 0;
+  transform: translate(-50%, -50%);
 }
 
 .orbit-body {
   position: absolute;
   left: 0;
   top: 0;
-  transform: translate(-50%, -50%);
+  transform: rotate(calc(-1 * var(--planet-angle)));
   transform-origin: center center;
+}
+
+.orbit-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  animation-duration: var(--orbit-duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.orbit-1 .orbit-content,
+.orbit-3 .orbit-content {
+  animation-name: orbit-label-counter;
+}
+
+.orbit-2 .orbit-content {
+  animation-name: orbit-label-counter-reverse;
+}
+
+.orbit-2 .orbit-angle:nth-child(2) .orbit-content,
+.orbit-3 .orbit-angle:nth-child(1) .orbit-content {
+  flex-direction: row-reverse;
 }
 
 .orbit-node {
@@ -141,48 +173,13 @@ img {
     0 0 16px rgba(255, 255, 255, 0.25);
 }
 
-.orbit-legend {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 15;
-}
-
-.legend-item {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 9px 3px 5px;
-  border-radius: 999px;
-  background: rgba(5, 5, 5, 0.6);
-  backdrop-filter: blur(3px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  white-space: nowrap;
-}
-
-.legend-right {
-  transform: translate(0, -50%);
-}
-
-.legend-left {
-  flex-direction: row-reverse;
-  padding: 3px 5px 3px 9px;
-  transform: translate(-100%, -50%);
-}
-
-.legend-center {
-  transform: translate(-50%, -50%);
-  justify-content: center;
-}
-
 .orbit-label {
   display: block;
   color: rgba(191, 219, 254, 0.82);
   font-size: 8px;
   line-height: 1;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   white-space: nowrap;
   text-shadow: 0 0 8px rgba(96, 165, 250, 0.35);
@@ -243,13 +240,15 @@ img {
   inset: 0;
   pointer-events: none;
   border-radius: 50%;
-  box-shadow: inset 0 0 24px rgba(59, 130, 246, 0.3);
+  box-shadow:
+    inset 0 0 24px rgba(59, 130, 246, 0.3);
 }
 
 @keyframes orbit-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -259,8 +258,29 @@ img {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbit-label-counter {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbit-label-counter-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -286,11 +306,11 @@ img {
   }
 
   .orbit-1 {
-    inset: 25%;
+    inset: 22%;
   }
 
   .orbit-2 {
-    inset: 13%;
+    inset: 10%;
   }
 
   .orbit-3 {
@@ -299,16 +319,12 @@ img {
 
   .orbit-label {
     font-size: 6px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
   }
 
   .orbit-node {
     width: 7px;
     height: 7px;
-  }
-
-  .hero-photo-frame {
-    width: 46%;
   }
 }
 
@@ -326,14 +342,11 @@ img {
     width: 6px;
     height: 6px;
   }
-
-  .hero-photo-frame {
-    width: 46%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orbit-track {
+  .orbit-track,
+  .orbit-content {
     animation: none !important;
   }
 }

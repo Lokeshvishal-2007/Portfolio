@@ -5,7 +5,12 @@ import { ArrowRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { config } from "@/data/config";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 
 type OrbitItem = {
   label: string;
@@ -21,18 +26,18 @@ type OrbitProps = {
 };
 
 const orbitOneItems: OrbitItem[] = [
-  { label: "AI", angle: 20 },
-  { label: "PYTHON", angle: 200 },
+  { label: "AI", angle: 0 },
+  { label: "PYTHON", angle: 180 },
 ];
 
 const orbitTwoItems: OrbitItem[] = [
-  { label: "COMPUTER VISION", angle: 65 },
-  { label: "ML", angle: 245 },
+  { label: "COMPUTER VISION", angle: 60 },
+  { label: "ML", angle: 240 },
 ];
 
 const orbitThreeItems: OrbitItem[] = [
-  { label: "REACT", angle: 125 },
-  { label: "FULL STACK", angle: 305 },
+  { label: "REACT", angle: 120 },
+  { label: "FULL STACK", angle: 300 },
 ];
 
 function HeroVisual() {
@@ -75,7 +80,7 @@ function HeroVisual() {
   };
 
   const handlePointerMove = (
-    event: React.PointerEvent<HTMLDivElement>
+    event: ReactPointerEvent<HTMLDivElement>
   ) => {
     if (
       shouldReduceMotion ||
@@ -114,79 +119,35 @@ function HeroVisual() {
         style={
           {
             "--orbit-duration": duration,
-          } as React.CSSProperties
+          } as CSSProperties
         }
         aria-hidden="true"
       >
         {items.map((item) => (
           <div
             key={`${orbitClass}-${item.label}`}
-            className="orbit-planet"
+            className="orbit-angle"
             style={
               {
                 "--planet-angle": `${item.angle}deg`,
-              } as React.CSSProperties
+              } as CSSProperties
             }
           >
-            <div className="orbit-body">
-              <span className={`orbit-node ${dotVariant}`} />
+            <div className="orbit-planet">
+              <div className="orbit-body">
+                <div className="orbit-content">
+                  <span className={`orbit-node ${dotVariant}`} />
+                  <span className="orbit-label">
+                    {item.label}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         ))}
       </div>
     );
   };
-
-  const legendItems: {
-    label: string;
-    top: string;
-    left: string;
-    dot: "dot-blue" | "dot-purple" | "dot-subtle";
-    align: "left" | "right" | "center";
-  }[] = [
-    {
-      label: "AI",
-      top: "-4%",
-      left: "50%",
-      dot: "dot-blue",
-      align: "center",
-    },
-    {
-      label: "PYTHON",
-      top: "104%",
-      left: "50%",
-      dot: "dot-blue",
-      align: "center",
-    },
-    {
-      label: "COMPUTER VISION",
-      top: "23%",
-      left: "97%",
-      dot: "dot-purple",
-      align: "right",
-    },
-    {
-      label: "ML",
-      top: "77%",
-      left: "3%",
-      dot: "dot-purple",
-      align: "left",
-    },
-    {
-      label: "REACT",
-      top: "77%",
-      left: "97%",
-      dot: "dot-subtle",
-      align: "right",
-    },
-    {
-      label: "FULL STACK",
-      top: "23%",
-      left: "3%",
-      dot: "dot-subtle",
-      align: "left",
-    },
-  ];
 
   const isActive = isHovered || isPressed;
 
@@ -263,24 +224,6 @@ function HeroVisual() {
               className="profile-photo"
             />
           </div>
-        </div>
-
-        <div className="orbit-legend" aria-hidden="true">
-          {legendItems.map((item) => (
-            <div
-              key={item.label}
-              className={`legend-item legend-${item.align}`}
-              style={{
-                top: item.top,
-                left: item.left,
-              }}
-            >
-              <span className={`orbit-node ${item.dot}`} />
-              <span className="orbit-label">
-                {item.label}
-              </span>
-            </div>
-          ))}
         </div>
       </motion.div>
     </div>
