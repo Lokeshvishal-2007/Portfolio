@@ -237,7 +237,7 @@ function HeroVisual() {
 
           <div className="hero-photo-frame">
             <Image
-              src="\Portfolio\public\profile\Image.jpg"
+              src="/public/profile/Image.jpg"
               alt="Lokeshvishal"
               width={220}
               height={220}
